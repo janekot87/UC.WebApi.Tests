@@ -20,15 +20,14 @@ namespace UC.WebApi.Tests.API.Tests
         public void CreateClassifiedTest(string digest, string auth)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/objects", Method.POST);
+            var request = new RestRequest("/objects?digest=gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh", Method.POST);
             
             //var request = new UCRestRequest(ENTRYPOINT, Method.POST);
 
             request.RequestFormat = DataFormat.Json;
             request
-                .AddParameter("digest", digest)
                 .AddHeader("Authorization", auth)
-                .AddBody(new {user_id = "Jane", year = "2000", city = "noida", model = "astonmartin-db9", price = "666666"});
+                .AddJsonBody(new {user_id = "Jane", year = "2000", city = "noida", model = "astonmartin-db9", price = "666666"});
 
                 
                 

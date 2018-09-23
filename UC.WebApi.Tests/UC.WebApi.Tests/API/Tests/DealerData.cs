@@ -76,7 +76,7 @@ namespace UC.WebApi.Tests
         public void InvalidDealerNameTest()
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/index.php/api/v2/users/{dealer_name}", Method.GET);
+            var request = new RestRequest("users/{dealer_name}", Method.GET);
 
             request
                 .AddUrlSegment("dealer_name", "Jane2018_invalid")

@@ -17,18 +17,17 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.Digest, Data.BasicAuth, Data.ContentType)]
         public void RegisterRequestValidTest(string digest, string auth, string contentType)
         {
-            var client = new RestClient("http://dev-usedcars-api.autoportal.com/api.php/api/v2");
-            var request = new RestRequest("user/reg_requests", Method.POST);
+            var client = new RestClient("http://dev-usedcars-api.autoportal.com/index.php/api/v2");
+            var request = new RestRequest("/user/reg_requests?digest=gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh", Method.POST);
 
-            //request.RequestFormat = DataFormat.Json;
             request
-                .AddParameter("digest", digest)
+                //.AddParameter("digest", digest)
                 .AddHeader("Content-Type", contentType)
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new
                 {
-                    name = "Testttt",
-                    phone = "+9198765419",
+                    name = "Testttt11",
+                    phone = "+9198765418",
                     city = "New Delhi",
                     dealer_type = "1",
                     source = "Android_app"
