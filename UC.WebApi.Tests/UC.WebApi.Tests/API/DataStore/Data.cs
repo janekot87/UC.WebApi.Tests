@@ -8,9 +8,7 @@ namespace UC.WebApi.Tests.API.DataStore
     {
         public const string Digest = "gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh";
         public const string BasicAuth = "Basic dXNlZGNhcnNfYXBpOmhBQzMyVFdCUzY=";
-        public const string ContentType = "applciation/json";
-        public const string DealerName = "Jane2018";
-
-
+        public const string ContentType = "application/json";
+        public const string DealerName = "JaneCat31";
     }
 }

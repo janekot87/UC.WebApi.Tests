@@ -20,7 +20,7 @@ namespace UC.WebApi.Tests.API.Tests
         public void CreateClassifiedTest(string digest, string auth)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest(ENTRYPOINT, Method.POST);
+            var request = new RestRequest("/objects", Method.POST);
             
             //var request = new UCRestRequest(ENTRYPOINT, Method.POST);
 

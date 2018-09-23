@@ -12,14 +12,13 @@ namespace UC.WebApi.Tests.API.Tests
 {
     public class RegisterRequest
     {
-        public const string Entrypoint = "user/reg_requests";
 
         [Theory]
         [InlineData(Data.Digest, Data.BasicAuth, Data.ContentType)]
         public void RegisterRequestValidTest(string digest, string auth, string contentType)
         {
-            var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/user/reg_requests", Method.POST);
+            var client = new RestClient("http://dev-usedcars-api.autoportal.com/api.php/api/v2");
+            var request = new RestRequest("user/reg_requests", Method.POST);
 
             //request.RequestFormat = DataFormat.Json;
             request
@@ -28,13 +27,13 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new
                 {
-                    name = "Test",
-                    phone = "+919876543210",
+                    name = "Testttt",
+                    phone = "+9198765419",
                     city = "New Delhi",
                     dealer_type = "1",
                     source = "Android_app"
                 });
-                
+
 
             var response = client.Execute<RegisterRequestModel>(request);
 

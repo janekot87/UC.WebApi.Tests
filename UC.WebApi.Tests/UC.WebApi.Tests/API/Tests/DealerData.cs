@@ -17,7 +17,7 @@ namespace UC.WebApi.Tests
         public void DealerDataTest(string dealer, string digest, string auth)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/index.php/api/v2/users/{dealer_name}", Method.GET);
+            var request = new RestRequest("/users/{dealer_name}", Method.GET);
 
             request
                 .AddUrlSegment("dealer_name", dealer)
