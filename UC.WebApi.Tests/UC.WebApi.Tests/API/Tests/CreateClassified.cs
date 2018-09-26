@@ -1,4 +1,4 @@
-﻿using RestSharp;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,21 @@ namespace UC.WebApi.Tests.API.Tests
             request.RequestFormat = DataFormat.Json;
             request
                 .AddHeader("Authorization", auth)
-                .AddJsonBody(new {user_id = "Jane", year = "2000", city = "noida", model = "astonmartin-db9", price = "666666"});
+                .AddJsonBody(
+                new {
+                    data = 
+                    new {
+                        user_id = "Jane",
+                        year = "2000",
+                        city = "noida",
+                        model = 
+                        new {
+                            model = "astonmartin-db9",
+                            brand = "astonmartin"
+                        },
+                        price = "666666"
+                    }
+                });
 
                 
                 
