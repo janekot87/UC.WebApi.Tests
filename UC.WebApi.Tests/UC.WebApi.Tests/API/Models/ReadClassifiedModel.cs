@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-
 using System.ComponentModel.DataAnnotations;
-
 
 namespace UC.WebApi.Tests.API.Models
 
@@ -28,10 +25,9 @@ namespace UC.WebApi.Tests.API.Models
             [Required]
             public string guid { get; set; }
 
+            public string special_conditions { get; set; }
 
-            public object special_conditions { get; set; }
-
-            public object description { get; set; }
+            public string description { get; set; }
 
             [Required]
             public string color { get; set; }
@@ -57,11 +53,11 @@ namespace UC.WebApi.Tests.API.Models
             [Required]
             public string year { get; set; }
 
-            public object step { get; set; }
+            public string step { get; set; }
 
-            public object reason { get; set; }
+            public string reason { get; set; }
 
-            public object status_before_delete { get; set; }
+            public string status_before_delete { get; set; }
 
             [Required]
             public string classified_phone { get; set; }
@@ -110,7 +106,8 @@ namespace UC.WebApi.Tests.API.Models
             [Required]
             public string city_path { get; set; }
 
-            public object certifier { get; set; }
+            public string certifier { get; set; }
+
             [Required]
             public string fuel_type { get; set; }
 
@@ -118,16 +115,16 @@ namespace UC.WebApi.Tests.API.Models
             public string transmission { get; set; }
 
             [Required]
-            public string created_at { get; set; }
+            public string Created_at { get; set; }
 
-            public List<object> images { get; set; }
+            public List<string> images { get; set; }
 
-            public List<object> @params { get; set; }
+            public List<string> Params { get; set; }
 
-            public object certificate { get; set; }
+            public string Certificate { get; set; }
 
             [Required]
-            public string link { get; set; }
+            public string Link { get; set; }
         }
 
     }

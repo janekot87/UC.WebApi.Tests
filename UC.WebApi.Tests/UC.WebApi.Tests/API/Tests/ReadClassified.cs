@@ -26,16 +26,9 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response = client.Execute<ReadClassifiedModel.RootObject>(request);
 
-          
-            if (response.StatusCode != HttpStatusCode.OK || response.Data == null)
+            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
-                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode));
-            }
-
-            if (!response.Data.Success)
-            {
-                //var response1 = client.Execute<ErrorModel.RootObject>(request);
-                //throw new Exception(AssertMessages.InvalidDealerNameErrorMessage(response.Data.Description, response.Data.Error_code, client.BuildUri(request)));
+                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
 
             List<string> allErrorMessages = new List<string>();
@@ -43,8 +36,8 @@ namespace UC.WebApi.Tests.API.Tests
             ValidationResultModel<ReadClassifiedModel.RootObject> classifiedDataMainResults;
             var isClassifiedDataValid = GlobalLogic.IsModelValid(response.Data, out classifiedDataMainResults);
 
-            ValidationResultModel<ReadClassifiedModel.Items> dealerDataItemResults;
-            var areClassifiedDataItemsValid = GlobalLogic.IsModelValid(response.Data.Items, out dealerDataItemResults);
+            ValidationResultModel<ReadClassifiedModel.Items> classifiedDataItemsResults;
+            var areClassifiedDataItemsValid = GlobalLogic.IsModelValid(response.Data.Items, out classifiedDataItemsResults);
 
             if (!isClassifiedDataValid)
             {
@@ -57,12 +50,13 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (!areClassifiedDataItemsValid)
             {
-                var message = $"Classified items with guid: {classifiedDataMainResults.Model.Items.guid}"
+                var message = $"Classified items with guid: {classifiedDataItemsResults.Model.guid}"
                     .RequestInfo(client, request)
-                    .WithValidationErrors(classifiedDataMainResults.Results);
+                    .WithValidationErrors(classifiedDataItemsResults.Results);
 
                 allErrorMessages.Add(message);
             }
+
 
             if (allErrorMessages.Any())
             {

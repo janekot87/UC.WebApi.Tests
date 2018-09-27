@@ -9,7 +9,7 @@ namespace UC.WebApi.Tests.API.Logic
 {
     public static class AssertMessages
     {
-        public static string StatusCodeErrorMessage(Uri requestUrl, HttpStatusCode statusCode) => $"Failed to send request: {requestUrl} HttpResponseStatusCode: {statusCode}";
+        public static string StatusCodeErrorMessage(Uri requestUrl, HttpStatusCode statusCode, bool success) => $"\r\nFailed to send request: {requestUrl}\r\nHttpResponseStatusCode: {statusCode}\r\nResponse Success: {success}";
         public static string InvalidDealerNameErrorMessage(string description, int errorCode, Uri requestUrl) => $"Response success is False! Error description: '{description}' Error code: '{errorCode}' for requestUrl: {requestUrl}";
         public static string InvalidDigestErrorMessage(bool success, string message, Uri requestUrl) => $"Response success is False! Success: '{success}' Message: '{message}' for requestUrl: {requestUrl}";
 
