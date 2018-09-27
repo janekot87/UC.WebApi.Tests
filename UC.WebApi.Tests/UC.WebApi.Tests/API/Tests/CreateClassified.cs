@@ -39,34 +39,27 @@ namespace UC.WebApi.Tests.API.Tests
                             model = "astonmartin-db9",
                             brand = "astonmartin"
                         },
-                        price = "666666"
+                        price = "777777",
+                        variant_id  = "astonmartin-db9-coupe",
+                        km_driven = 22222,
+                        owners = 1,
+                        color = "white",
+                        fuel_type = "Petrol",
+                        transmission = "Manual",
+                        engine = 3333,
+                        body_type = "Sedan",
+                        have_certificated = "no",
+                        classified_phone = "+91-9999999999",
+                        address = "Test",
+                        status = 1,
+                        source = "Cabinet"
+
                     }
                 });
 
                 
                 
-                
-                //.AddJsonBody(new { user_id = "Jane" })
-                //.AddJsonBody(new { year = "2000" })
-                //.AddJsonBody(new { city = "noida" })
-                //.AddJsonBody(new { model = "astonmartin-db9" })
-                //.AddJsonBody(new { variant_id = "stonmartin-db9-coupe1" })
-                //.AddJsonBody(new { km_driven = "22000" })
-                //.AddJsonBody(new { owners = "1" })
-                //.AddJsonBody(new { color = "white" })
-                //.AddJsonBody(new { fuel_type = "Petrol" })
-                //.AddJsonBody(new { transmission = "Manual" })
-                //.AddJsonBody(new { engine = "3333" })
-                //.AddJsonBody(new { body_type = "Sedan" })
-                //.AddJsonBody(new { have_certificated = "no" })
-                //.AddJsonBody(new { price = "222222" })
-                //.AddJsonBody(new { classified_phone = "+91-9999999999" })
-                //.AddJsonBody(new { address = "khgkh" })
-                //.AddJsonBody(new { status = 1 })
-                //.AddJsonBody(new { images = Data.image })
-                //.AddJsonBody(new { brand = "astonmartin" })
-                //.AddJsonBody(new { source = "Cabinet" });
-
+               
                 
             var response = client.Execute<CreateClassifiedModel>(request);
 
