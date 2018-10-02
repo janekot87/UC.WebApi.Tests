@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using UC.WebApi.Tests.API.CreativeMedia;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;

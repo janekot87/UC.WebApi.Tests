@@ -1,8 +1,5 @@
 ﻿using KnowledgeBase.WebApi.AutomatedTests.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace UC.WebApi.Tests.API.Models
 {
