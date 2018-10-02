@@ -18,7 +18,7 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeNMI)]
         [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeUI)]
         [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeL)]
-        public void UploadMainImageTest (string digest, string auth, string guid, string fileType)
+        public void UploadImageTest (string digest, string auth, string guid, string fileType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/file?digest={digest}", Method.POST);
@@ -38,8 +38,6 @@ namespace UC.WebApi.Tests.API.Tests
                             name = Data.ImageName,
                             content = Data.FileContent
                         }
-                        
-                   
                 });
 
             var response = client.Execute<UploadImageModel>(request);
