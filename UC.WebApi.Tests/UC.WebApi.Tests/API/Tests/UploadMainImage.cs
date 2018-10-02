@@ -11,11 +11,14 @@ using Xunit;
 
 namespace UC.WebApi.Tests.API.Tests
 {
-    public class UploadMainImage
-    {      
+    public class UploadImage
+    {
         [Theory]
-        [InlineData(Data.Digest, Data.BasicAuth, Data.Guid)]
-        public void UploadMainImageTest (string digest, string auth, string guid)
+        [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeMI)]
+        [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeNMI)]
+        [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeUI)]
+        [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeL)]
+        public void UploadMainImageTest (string digest, string auth, string guid, string fileType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/file?digest={digest}", Method.POST);
@@ -31,7 +34,7 @@ namespace UC.WebApi.Tests.API.Tests
                     guid = guid,
                         file = 
                         new {
-                            type = "object_main_image",
+                            type = fileType,
                             name = Data.ImageName,
                             content = Data.FileContent
                         }

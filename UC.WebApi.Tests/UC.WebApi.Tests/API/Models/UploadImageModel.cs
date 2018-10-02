@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KnowledgeBase.WebApi.AutomatedTests.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -13,7 +14,7 @@ namespace UC.WebApi.Tests.API.Models
         public bool Success { get; set; }
 
         [Required]
-        [Url]
+        [ValidateUrl]
         public string Url { get; set; }
     }
 }
