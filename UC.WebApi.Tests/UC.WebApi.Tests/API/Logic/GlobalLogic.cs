@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using UC.WebApi.Tests.API.Models;
 
@@ -49,6 +50,9 @@ namespace UC.WebApi.Tests.API.Logic
             return finalIsValid;
         }
 
-
+        internal static bool IsModelValid(object items, out ValidationResultModel<RegSourceModel.Items> dealerDataItemResults)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
