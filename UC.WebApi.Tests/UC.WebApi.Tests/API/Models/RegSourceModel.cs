@@ -1,7 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using UC.WebApi.Tests.API.Attributes;
 
 namespace UC.WebApi.Tests.API.Models
 
@@ -11,23 +10,24 @@ namespace UC.WebApi.Tests.API.Models
         public class RootObject
         {
             [Required]
-            public int results { get; set; }
+            public int Results { get; set; }
 
             [Required]
-            public List<Item> items { get; set; }
+            [EnsureOneElement(ErrorMessage = "At least one Item is required")]
+            public List<Item> Items { get; set; }
 
             [Required]
             [Range(typeof(bool), "true", "true", ErrorMessage = "Success is not true")]
-            public bool success { get; set; }
+            public bool Success { get; set; }
         }
 
         public class Item
         {
             [Required]
-            public string name { get; set; }
+            public string Name { get; set; }
 
             [Required]
-            public string source_key { get; set; }
+            public string Source_key { get; set; }
         }
 
     }

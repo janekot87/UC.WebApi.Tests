@@ -20,7 +20,6 @@ namespace UC.WebApi.Tests.API.Tests
             var request = new RestRequest("/user/reg_request_source?digest={digest}", Method.GET);
 
             request
-
                 .AddUrlSegment("digest", digest)
                 .AddHeader("Authorization", auth);
 
@@ -32,14 +31,13 @@ namespace UC.WebApi.Tests.API.Tests
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
 
-           
             List<string> allErrorMessages = new List<string>();
 
             ValidationResultModel<RegSourceModel.RootObject> regSourceMainResults;
             var isRegSourceDataValid = GlobalLogic.IsModelValid(response.Data, out regSourceMainResults);
 
-            ValidationResultModel<RegSourceModel.Items> RegSourceItemResults;
-            var areRegSourceDataItemsValid = GlobalLogic.IsModelValid(response.Data.Items, out RegSourceItemResults);
+            IList<ValidationResultModel<RegSourceModel.Item>> RegSourceItemResults;
+            var areRegSourceDataItemsValid = GlobalLogic.IsModelArrayValid(response.Data.Items, out RegSourceItemResults);
 
             if (!isRegSourceDataValid)
             {
@@ -52,11 +50,11 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (!areRegSourceDataItemsValid)
             {
-               // var message = $"Source items with name: {regSourceMainResults.Model.Items.name}"// не уверенна по поводу необходимости сообщения
-                   // .RequestInfo(client, request)
-                   // .WithValidationErrors(regSourceMainResults.Results);
+                var message = $"Source items: {regSourceMainResults.Model.Items}"
+                .RequestInfo(client, request)
+                .WithValidationErrors(regSourceMainResults.Results);
 
-               // allErrorMessages.Add(message);
+                allErrorMessages.Add(message);
             }
 
             if (allErrorMessages.Any())

@@ -49,10 +49,5 @@ namespace UC.WebApi.Tests.API.Logic
 
             return finalIsValid;
         }
-
-        internal static bool IsModelValid(object items, out ValidationResultModel<RegSourceModel.Items> dealerDataItemResults)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

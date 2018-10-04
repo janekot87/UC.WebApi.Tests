@@ -17,7 +17,7 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.BasicAuth, Data.ContentType)]
         public void RegisterRequestValidTest(string auth, string contentType)
         {
-            var client = new RestClient("http://dev-usedcars-api.autoportal.com/index.php/api/v2");
+            var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/user/reg_requests?digest=gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh", Method.POST);
 
             request

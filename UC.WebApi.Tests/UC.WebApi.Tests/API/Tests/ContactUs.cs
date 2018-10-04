@@ -17,7 +17,7 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.BasicAuth, Data.ContentType)]
         public void ContactUsTest(string auth, string contentType)
         {
-            var client = new RestClient("http://dev-usedcars-api.autoportal.com/index.php/api/v2");
+            var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/user/contact_us?digest=gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh", Method.POST);
 
             request
@@ -25,7 +25,7 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new
                 {
-                    usernamee = Data.DealerName,
+                    username = Data.DealerName,
                     message = "Hello World!"
                     
                 });
