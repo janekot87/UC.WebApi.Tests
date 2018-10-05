@@ -14,13 +14,14 @@ namespace UC.WebApi.Tests.API.Tests
     {
 
         [Theory]
-        [InlineData(Data.BasicAuth, Data.ContentType)]
-        public void ContactUsTest(string auth, string contentType)
+        [InlineData(Data.Digest,Data.BasicAuth, Data.ContentType)]
+        public void ContactUsTest(string digest, string auth, string contentType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/user/contact_us?digest=gLqVqvqHTxZk9RHxwtPjkbWtNAbdBpGh", Method.POST);
+            var request = new RestRequest("/user/contact_us?digest={digest}", Method.POST);
 
             request
+                .AddUrlSegment("digest", digest)
                 .AddHeader("Content-Type", contentType)
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new

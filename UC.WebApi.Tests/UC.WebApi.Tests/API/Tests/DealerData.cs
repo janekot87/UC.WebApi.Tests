@@ -26,18 +26,13 @@ namespace UC.WebApi.Tests
 
             var response = client.Execute<DealerDataModel.RootObject>(request);
 
-            //Response.isValid(response);
+           
             if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
 
-            if (!response.Data.Success)
-            {
-                //var response1 = client.Execute<ErrorModel.RootObject>(request);
-                //throw new Exception(AssertMessages.InvalidDealerNameErrorMessage(response.Data.Description, response.Data.Error_code, client.BuildUri(request)));
-            }
-
+           
             List<string> allErrorMessages = new List<string>();
 
             ValidationResultModel<DealerDataModel.RootObject> dealerDataMainResults;

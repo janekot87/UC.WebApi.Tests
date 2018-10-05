@@ -10,15 +10,15 @@ using Xunit;
 
 namespace UC.WebApi.Tests.API.Tests
 {
-    public class RegisterRequest
+    public class Feedback
     {
 
         [Theory]
         [InlineData(Data.Digest, Data.BasicAuth, Data.ContentType)]
-        public void RegisterRequestValidTest(string digest, string auth, string contentType)
+        public void FeedbackTest(string digest, string auth, string contentType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/user/reg_requests?digest={digest}", Method.POST);
+            var request = new RestRequest("/user/feedback?digest={digest}", Method.POST);
 
             request
                 .AddUrlSegment("digest", digest)
@@ -26,11 +26,9 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new
                 {
-                    name = "Testttt11",
-                    phone = "+9198765418",
-                    city = "New Delhi",
-                    dealer_type = "1",
-                    source = "Android_app"
+                    username = Data.DealerName,
+                    message = "Hello World!"
+
                 });
 
 
@@ -43,14 +41,14 @@ namespace UC.WebApi.Tests.API.Tests
 
             List<string> allErrorMessages = new List<string>();
 
-            ValidationResultModel<RegisterRequestModel> registerRequestResults;
-            var isRegisterRequestValid = GlobalLogic.IsModelValid(response.Data, out registerRequestResults);
+            ValidationResultModel<RegisterRequestModel> feedbackResults;
+            var isFeedbackValid = GlobalLogic.IsModelValid(response.Data, out feedbackResults);
 
-            if (!isRegisterRequestValid)
+            if (!isFeedbackValid)
             {
-                var message = $"Register Request with success: {registerRequestResults.Model.Success}"
+                var message = $"Feedback with success: {feedbackResults.Model.Success}"
                     .RequestInfo(client, request)
-                    .WithValidationErrors(registerRequestResults.Results);
+                    .WithValidationErrors(feedbackResults.Results);
 
                 allErrorMessages.Add(message);
             }
