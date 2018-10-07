@@ -50,11 +50,14 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (!areRegSourceDataItemsValid)
             {
-                var message = $"Source items: {regSourceMainResults.Model.Items}"
-                .RequestInfo(client, request)
-                .WithValidationErrors(regSourceMainResults.Results);
+                foreach (var RegSourceItemResult in RegSourceItemResults.Where(x => x.Results.Any()))
+                {
+                    var message = $"Source item with Name: {RegSourceItemResult.Model.Name}"
+                    .RequestInfo(client, request)
+                    .WithValidationErrors(RegSourceItemResult.Results);
 
-                allErrorMessages.Add(message);
+                    allErrorMessages.Add(message);
+                }
             }
 
             if (allErrorMessages.Any())

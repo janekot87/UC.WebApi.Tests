@@ -25,7 +25,6 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response = client.Execute<DealerLeadsModel.RootObject>(request);
 
-
             if(response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
@@ -50,11 +49,14 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (!areDealerLeadsDataItemsValid)
             {
-                var message = $"Dealer leads items: {dealerLeadsMainResults.Model.Items}"
-                .RequestInfo(client, request)
-                .WithValidationErrors(dealerLeadsMainResults.Results);
+                foreach (var DealerLeadsItemResult in DealerLeadsItemResults.Where(x => x.Results.Any()))
+                {
+                    var message = $"Dealer lead item with Classified_id: {DealerLeadsItemResult.Model.Classified_id}"
+                    .RequestInfo(client, request)
+                    .WithValidationErrors(DealerLeadsItemResult.Results);
 
-                allErrorMessages.Add(message);
+                    allErrorMessages.Add(message);
+                }
             }
 
             if (allErrorMessages.Any())

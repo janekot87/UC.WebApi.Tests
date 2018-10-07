@@ -50,11 +50,14 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (!areCertifiersDataItemsValid)
             {
-                var message = $"Certifiers items: {certifiersMainResults.Model.Items}"
-                .RequestInfo(client, request)
-                .WithValidationErrors(certifiersMainResults.Results);
+                foreach (var CertifiersItemResult in CertifiersItemResults.Where(x => x.Results.Any()))
+                {
+                    var message = $"Certifier item with Name: {CertifiersItemResult.Model.Name}"
+                    .RequestInfo(client, request)
+                    .WithValidationErrors(CertifiersItemResult.Results);
 
-                allErrorMessages.Add(message);
+                    allErrorMessages.Add(message);
+                }
             }
 
             if (allErrorMessages.Any())

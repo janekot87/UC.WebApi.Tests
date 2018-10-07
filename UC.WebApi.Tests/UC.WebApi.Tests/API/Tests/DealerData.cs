@@ -80,7 +80,7 @@ namespace UC.WebApi.Tests
 
             var response = client.Execute<DealerDataModel.RootObject>(request);
 
-            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
+            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == true)
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
@@ -97,7 +97,7 @@ namespace UC.WebApi.Tests
         public void InvalidDealerDigestTest()
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/index.php/api/v2/users/{dealer_name}", Method.GET);
+            var request = new RestRequest("/users/{dealer_name}", Method.GET);
 
             request
                 .AddUrlSegment("dealer_name", Data.DealerName)
@@ -106,7 +106,7 @@ namespace UC.WebApi.Tests
 
             var response = client.Execute<DealerDataModel.RootObject>(request);
 
-            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
+            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == true)
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
@@ -122,7 +122,7 @@ namespace UC.WebApi.Tests
         public void InvalidDealerAuthorizationTest()
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/index.php/api/v2/users/{dealer_name}", Method.GET);
+            var request = new RestRequest("/users/{dealer_name}", Method.GET);
 
             request
                 .AddUrlSegment("dealer_name", Data.DealerName)

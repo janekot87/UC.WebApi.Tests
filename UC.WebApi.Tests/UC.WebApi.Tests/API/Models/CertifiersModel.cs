@@ -20,7 +20,8 @@ namespace UC.WebApi.Tests.API.Models
             [EnsureOneElement(ErrorMessage = "At least one Item is required")]
             public List<Item> Items { get; set; }
         }
-                public class Item
+
+        public class Item
         {
             [Required]
             public string Name { get; set; }
