@@ -53,7 +53,7 @@ namespace UC.WebApi.Tests.API.Tests
                 {
                     var message = $"Cities item with Name: {CitiesItemResult.Model.Name}"
                     .RequestInfo(client, request)
-                    .WithValidationErrors(CertifiersItemResult.Results);
+                    .WithValidationErrors(CitiesItemResult.Results);
 
                     allErrorMessages.Add(message);
                 }
