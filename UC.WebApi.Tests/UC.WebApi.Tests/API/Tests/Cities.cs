@@ -36,7 +36,6 @@ namespace UC.WebApi.Tests.API.Tests
             var isCitiesDataValid = GlobalLogic.IsModelValid(response.Data, out citiesMainResults);
 
             IList<ValidationResultModel<CertifiersModel.Item>> CitiesItemResults;
-
             var areCitiesDataItemsValid = GlobalLogic.IsModelArrayValid(response.Data.Items, out CitiesItemResults);
 
             if (!isCitiesDataValid)
@@ -47,6 +46,7 @@ namespace UC.WebApi.Tests.API.Tests
 
                 allErrorMessages.Add(message);
             }
+
             if (!areCitiesDataItemsValid)
             {
                 foreach (var CitiesItemResult in CitiesItemResults.Where(x => x.Results.Any()))
@@ -64,11 +64,6 @@ namespace UC.WebApi.Tests.API.Tests
                 throw new Exception(allMessages);
             }
         }
-
-
-
-
-
     }
 }
 

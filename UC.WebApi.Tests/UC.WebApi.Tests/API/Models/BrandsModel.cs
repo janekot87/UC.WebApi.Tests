@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using UC.WebApi.Tests.API.Attributes;
 
-
 namespace UC.WebApi.Tests.API.Models
 {
     public class BrandsModel
@@ -14,15 +13,15 @@ namespace UC.WebApi.Tests.API.Models
             public bool Success { get; set; }
 
             [Required]
-            [EnsureOneElement(ErrorMessage = "At least one Item is required")]
-            public string Results { get; set; }
+            public int Results { get; set; }
 
             [Required]
+            [EnsureOneElement(ErrorMessage = "At least one Item is required")]
             public List<Item> Items { get; set; }
         }
         
 
-           public class Item
+        public class Item
         {
             [Required]
             public string Name { get; set; }
@@ -34,6 +33,7 @@ namespace UC.WebApi.Tests.API.Models
             public string Path { get; set; }
 
             [Required]
+            [ValidateUrl]
             public string Logo { get; set; }
         }
     }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 
-namespace KnowledgeBase.WebApi.AutomatedTests.Attributes
+namespace UC.WebApi.Tests.API.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
 
@@ -24,12 +24,12 @@ namespace KnowledgeBase.WebApi.AutomatedTests.Attributes
                 var statusCode = (int)response.StatusCode;
                 var contentType = response.Content.Headers.ContentType.MediaType;
 
-                if (statusCode == 200 && contentType.Equals("image/jpeg"))
+                if (statusCode == 200 && (contentType.Equals("image/jpeg") || contentType.Equals("image/gif")))
                 {
                     return true;
                 }
 
-                ErrorMessage = $"Status code: {statusCode} Content type: {contentType}";
+                ErrorMessage = $"Status code: {statusCode}\r\nContent type: {contentType}";
                 return false;
             }
             catch (Exception ex)

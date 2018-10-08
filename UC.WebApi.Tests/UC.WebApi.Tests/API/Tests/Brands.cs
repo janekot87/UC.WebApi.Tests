@@ -36,7 +36,6 @@ namespace UC.WebApi.Tests.API.Tests
             var isBrandsDataValid = GlobalLogic.IsModelValid(response.Data, out brandsMainResults);
 
             IList<ValidationResultModel<BrandsModel.Item>> BrandsItemResults;
-
             var areBrandsDataItemsValid = GlobalLogic.IsModelArrayValid(response.Data.Items, out BrandsItemResults);
 
             if (!isBrandsDataValid)
@@ -47,11 +46,12 @@ namespace UC.WebApi.Tests.API.Tests
 
                 allErrorMessages.Add(message);
             }
+
             if (!areBrandsDataItemsValid)
             {
                 foreach (var BrandsItemResult in BrandsItemResults.Where(x => x.Results.Any()))
                 {
-                    var message = $"Brands item with Name: {BrandsItemResult.Model.Name}"
+                    var message = $"\r\nBrands item with Name: '{BrandsItemResult.Model.Name}'\r\n"
                     .RequestInfo(client, request)
                     .WithValidationErrors(BrandsItemResult.Results);
 

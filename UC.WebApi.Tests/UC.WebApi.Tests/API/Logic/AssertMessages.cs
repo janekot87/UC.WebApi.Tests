@@ -18,7 +18,7 @@ namespace UC.WebApi.Tests.API.Logic
 
         public static string RequestInfo(this string errorMessage, IRestClient client, IRestRequest request)
         {
-            return $"{errorMessage} Request: {client.BuildUri(request)}";
+            return $"{errorMessage}Request: {client.BuildUri(request)}";
         }
 
         public static string WithValidationErrors(this string errorMessage, IEnumerable<ValidationResult> validationResults)

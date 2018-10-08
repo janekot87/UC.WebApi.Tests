@@ -8,7 +8,7 @@ using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
 
-namespace UC.WebApi.Tests
+namespace UC.WebApi.Tests.API.Tests
 {
     public class DealerData
     {
