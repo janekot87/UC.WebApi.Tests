@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using UC.WebApi.Tests.API.Attributes;
 
 
-namespace UC.WebApi.Tests.API.Models
+namespace UC.WebApi.Tests.API.Tests
 {
     class DealerLeadsModel
     {
