@@ -19,9 +19,7 @@ namespace UC.WebApi.Tests.API.Tests
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/recommends", Method.GET);
 
-
             request
-
                 .AddParameter("digest", digest)
                 .AddParameter("guid", guid)
                 .AddParameter("user_id", user_id)
@@ -33,14 +31,14 @@ namespace UC.WebApi.Tests.API.Tests
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
-
+            
             List<string> allErrorMessages = new List<string>();
 
             ValidationResultModel<RecommendsModel.RootObject> recommendsMainResults;
             var isRecommendsDataValid = GlobalLogic.IsModelValid(response.Data, out recommendsMainResults);
 
-            IList<ValidationResultModel<RecommendsModel.RecentlyAdded>> RecentlyAddedResults;
-            var areRecentlyAddedItemsValid = GlobalLogic.IsModelArrayValid(response.Data.RecentlyAddedItems, out RecentlyAddedResults);
+            IList<ValidationResultModel<RecommendsModel.Item>> recommendsAndRecentlyAddedResults;
+            var areRecommendsAndRecentlyAddedItemsValid = GlobalLogic.IsModelArrayValid(response.Data.RecentlyAdded.Concat(response.Data.Recommendations), out recommendsAndRecentlyAddedResults);
 
             if (!isRecommendsDataValid)
             {
@@ -51,13 +49,13 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
-            if (!areRecentlyAddedItemsValid)
+            if (!areRecommendsAndRecentlyAddedItemsValid)
             {
-                foreach (var RecentlyAddedResult in RecentlyAddedResults.Where(x => x.Results.Any()))
+                foreach (var recommendsAndRecentlyAddedResult in recommendsAndRecentlyAddedResults.Where(x => x.Results.Any()))
                 {
-                    var message = $"RecentlyAdded item with Guid: {RecentlyAddedResult.Model.Guid}"
+                    var message = $"RecentlyAdded item with Guid: {recommendsAndRecentlyAddedResult.Model.Guid}"
                     .RequestInfo(client, request)
-                    .WithValidationErrors(RecentlyAddedResult.Results);
+                    .WithValidationErrors(recommendsAndRecentlyAddedResult.Results);
 
                     allErrorMessages.Add(message);
                 }
