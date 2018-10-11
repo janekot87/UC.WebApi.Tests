@@ -54,8 +54,7 @@ namespace UC.WebApi.Tests.API.Models
 
             [Required]
             public string Short_guid { get; set; }
-
-            [Required]
+                       
             public string Thumb { get; set; }
 
             [Required]

@@ -27,7 +27,7 @@ namespace UC.WebApi.Tests.API.Tests
 
             if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
-                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
+                throw new Exception(AssertMessages.PhVerifyStatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success, response.Data.Code, response.Data.Message));
             }
 
             List<string> allErrorMessages = new List<string>();
