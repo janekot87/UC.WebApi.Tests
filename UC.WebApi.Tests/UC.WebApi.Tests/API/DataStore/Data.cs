@@ -8,6 +8,8 @@ namespace UC.WebApi.Tests.API.DataStore
         public const string ContentType = "application/json";
         public const string DealerName = "testdaria";
         public const string Phone = "8989797754";
+        public const int Otp = 2189;
+        public const string EmailGuid = "16ee25a500c9f856bcf6bd47bb9ebee1";
         public const string Guid = "c6e9377c48d73b4796acdde35ef1f13dc8e3efe2";
         public const int User_id = 77;
         public const string Email = "testdaria@test.int";
