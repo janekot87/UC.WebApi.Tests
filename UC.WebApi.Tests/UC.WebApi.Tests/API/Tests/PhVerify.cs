@@ -23,7 +23,7 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddParameter("phone", phone)
                 .AddHeader("Authorization", auth);
 
-            var response = client.Execute<PhVerifyModel.RootObject>(request);
+            var response = client.Execute<PhVerifyModel>(request);
 
             if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
@@ -32,14 +32,14 @@ namespace UC.WebApi.Tests.API.Tests
 
             List<string> allErrorMessages = new List<string>();
 
-            ValidationResultModel<PhVerifyModel.RootObject> phverifyMainResults;
-            var isPhVerifyDataValid = GlobalLogic.IsModelValid(response.Data, out phverifyMainResults);
+            ValidationResultModel<PhVerifyModel> phverifyResults;
+            var isPhVerifyDataValid = GlobalLogic.IsModelValid(response.Data, out phverifyResults);
 
             if (!isPhVerifyDataValid)
             {
-                var message = $"PhVerify with success: {phverifyMainResults.Model.Success} and message: {phverifyMainResults.Model.Message}."
+                var message = $"PhVerify with success: {phverifyResults.Model.Success} and message: {phverifyResults.Model.Message}."
                     .RequestInfo(client, request)
-                    .WithValidationErrors(phverifyMainResults.Results);
+                    .WithValidationErrors(phverifyResults.Results);
 
                 allErrorMessages.Add(message);
             }

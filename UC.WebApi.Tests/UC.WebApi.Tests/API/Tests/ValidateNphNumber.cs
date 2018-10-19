@@ -8,44 +8,43 @@ using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
 
+
+
 namespace UC.WebApi.Tests.API.Tests
 {
-    public class ChPassViaEmail
+    public class ValidateNphNumber
     {
         [Theory]
-        [InlineData(Data.Digest, Data.EmailGuid, Data.Pass, Data.BasicAuth)]
-        public void ChPassViaEmailTest(string digest, string emailguid, string pass, string auth)
+        [InlineData(Data.DealerName, Data.Digest, Data.NewPhone, Data.BasicAuth)]
+        public void ValidateNphNumberTest(string dealer, string digest, string newphone, string auth)
         {
             var client = new RestClient(TestConfiguration.API.Location);
-            var request = new RestRequest("/user/pass_reset/{emailguid}?digest={digest}", Method.POST);
+            var request = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
 
             request
-                .AddUrlSegment("emailguid", emailguid)
+                .AddUrlSegment("dealer_name", dealer)
                 .AddUrlSegment("digest", digest)
-                .AddHeader("Authorization", auth)
-                .AddJsonBody(new
-                {
-                    password = pass
+                .AddParameter("phone", newphone)
+                .AddHeader("Authorization", auth);
 
-                });
-
-            var response = client.Execute<RegisterRequestModel>(request);
+            var response = client.Execute<ValidateNphNumberModel>(request);
 
             if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
             {
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
             }
 
+
             List<string> allErrorMessages = new List<string>();
 
-            ValidationResultModel<RegisterRequestModel> chpassviaemailResults;
-            var isChPassViaEmailDataValid = GlobalLogic.IsModelValid(response.Data, out chpassviaemailResults);
+            ValidationResultModel<ValidateNphNumberModel> validatenphnumberResults;
+            var isValidateNphNumberDataValid = GlobalLogic.IsModelValid(response.Data, out validatenphnumberResults);
 
-            if (!isChPassViaEmailDataValid)
+            if (!isValidateNphNumberDataValid)
             {
-                var message = $"ChPassViaEmail with success: {chpassviaemailResults.Model.Success}."
+                var message = $"ValidateNphNumber with success: {validatenphnumberResults.Model.Success} and description: {validatenphnumberResults.Model.Description}."
                     .RequestInfo(client, request)
-                    .WithValidationErrors(chpassviaemailResults.Results);
+                    .WithValidationErrors(validatenphnumberResults.Results);
 
                 allErrorMessages.Add(message);
             }
@@ -54,9 +53,10 @@ namespace UC.WebApi.Tests.API.Tests
                 var allMessages = string.Join("\r\n\r\n", allErrorMessages);
                 throw new Exception(allMessages);
             }
-
-
-
         }
     }
 }
+
+
+        
+
