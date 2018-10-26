@@ -17,24 +17,28 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.DealerName, Data.Digest, Data.NewPhone, Data.Save, Data.BasicAuth)]
         public void ChangePhoneNumberTest(string dealer, string digest, string newphone, int save, string auth)
         {
-            Random generator = new Random();
-            var newPhoneRandom = newphone + generator.Next(0, 100000).ToString("D5");
+            Random generator = new Random();          
 
             var client1 = new RestClient(TestConfiguration.API.Location);
             var request1 = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
+            var requestCounter = 0;
+            string newPhoneRandom;
+            IRestResponse<ValidateNphNumberModel> response1;
 
-            request1
+            do
+            {
+                
+                newPhoneRandom = newphone + generator.Next(0, 100000).ToString("D5");
+
+                request1
                 .AddUrlSegment("dealer_name", dealer)
                 .AddUrlSegment("digest", digest)
                 .AddParameter("phone", newPhoneRandom)
                 .AddHeader("Authorization", auth);
 
-            var response1 = client1.Execute<ValidateNphNumberModel>(request1);
+                 response1 = client1.Execute<ValidateNphNumberModel>(request1);
 
-            if (response1.Data.Success == false)
-            {
-                newPhoneRandom = newphone + generator.Next(0, 100000).ToString("D5");
-            }
+            } while (response1.Data.Success == false && requestCounter++ < 5);
 
             if (response1.StatusCode != HttpStatusCode.OK || response1.Data == null || response1.Data.Success == false)
             {
