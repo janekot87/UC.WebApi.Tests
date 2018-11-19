@@ -10,6 +10,7 @@ namespace UC.WebApi.Tests.API.DataStore
         public const string Phone = "58989797754";
         public const string NewPhone = "99999";
         public const int Otp = 2189;
+        public const string Userdata = "dGVzdGRhcmlhOjEyMzQ1Njc4";
         public const int Save = 1;
         public const string EmailGuid = "a51687fe83c5bd83b22d3f48aad72690";
         public const string Guid = "c6e9377c48d73b4796acdde35ef1f13dc8e3efe2";
