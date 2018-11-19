@@ -9,12 +9,9 @@ namespace UC.WebApi.Tests.API.Logic
 {
     public static class AssertMessages
     {
-        public static string StatusCodeErrorMessage(Uri requestUrl, HttpStatusCode statusCode, bool success) => $"\r\nFailed to send request: {requestUrl}\r\nHttpResponseStatusCode: {statusCode}\r\nResponse Success: {success}";
+        public static string StatusCodeErrorMessage(Uri requestUrl, HttpStatusCode statusCode, string content) => $"\r\nFailed to send request: {requestUrl}\r\nHttpResponseStatusCode: {statusCode}\r\nResponse Content: {content}";
         public static string InvalidDealerNameErrorMessage(string description, int errorCode, Uri requestUrl) => $"Response success is False! Error description: '{description}' Error code: '{errorCode}' for requestUrl: {requestUrl}";
         public static string InvalidDigestErrorMessage(bool success, string message, Uri requestUrl) => $"Response success is False! Success: '{success}' Message: '{message}' for requestUrl: {requestUrl}";
-
-        public static string PhVerifyStatusCodeErrorMessage(Uri requestUrl, HttpStatusCode statusCode, bool success, int code, string message) => $"\r\nFailed to send request: {requestUrl}\r\nHttpResponseStatusCode: {statusCode}\r\nResponse Success: {success}\r\nCode: {code}\r\nMessage: {message}";
-
 
         public static string RequestInfo(this string errorMessage, IRestClient client, IRestRequest request)
         {

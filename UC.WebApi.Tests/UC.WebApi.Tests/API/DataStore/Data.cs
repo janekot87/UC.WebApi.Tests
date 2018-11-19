@@ -7,7 +7,7 @@ namespace UC.WebApi.Tests.API.DataStore
         public const string BasicAuth = "Basic dXNlZGNhcnNfYXBpOmhBQzMyVFdCUzY=";
         public const string ContentType = "application/json";
         public const string DealerName = "testdaria";
-        public const string Phone = "8989797754";
+        public const string Phone = "58989797754";
         public const string NewPhone = "99999";
         public const int Otp = 2189;
         public const int Save = 1;

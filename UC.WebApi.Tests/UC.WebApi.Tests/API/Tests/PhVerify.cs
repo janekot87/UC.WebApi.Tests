@@ -7,6 +7,8 @@ using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
+using static UC.WebApi.Tests.API.Logic.GlobalLogic;
+
 namespace UC.WebApi.Tests.API.Tests
 {
     public class PhVerify
@@ -25,10 +27,7 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response = client.Execute<PhVerifyModel>(request);
 
-            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
-            {
-                throw new Exception(AssertMessages.PhVerifyStatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success, response.Data.Code, response.Data.Message));
-            }
+            EnsureOkResponseStatusCode(response, client, request);
 
             List<string> allErrorMessages = new List<string>();
 

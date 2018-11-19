@@ -52,14 +52,12 @@ namespace UC.WebApi.Tests.API.Logic
             return finalIsValid;
         }
 
-        //public static void EnsureOkResponseStatusCode(IRestResponse response)
-        //{
-
-        //    if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
-        //    {
-        //        throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
-        //    }
-
-        //}
+        public static void EnsureOkResponseStatusCode(IRestResponse response, RestClient client, RestRequest request)
+        {
+            if (response.StatusCode != HttpStatusCode.OK || response.Content == null || response.Content.Contains("false"))
+            {
+                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Content));
+            }
+        }
     }
 }

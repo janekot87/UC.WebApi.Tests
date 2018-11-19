@@ -7,6 +7,7 @@ using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
+using static UC.WebApi.Tests.API.Logic.GlobalLogic;
 
 
 namespace UC.WebApi.Tests.API.Tests
@@ -15,9 +16,10 @@ namespace UC.WebApi.Tests.API.Tests
     {
         [Theory]
         [InlineData(Data.DealerName, Data.Digest, Data.NewPhone, Data.Save, Data.BasicAuth)]
-        public void ChangePhoneNumberTest(string dealer, string digest, string newphone, int save, string auth)
+        //newphone name refactoring 
+        public void ChangePhoneNumberTest(string dealer, string digest, string newPhone, int save, string auth)
         {
-            Random generator = new Random();          
+            var generator = new Random();          
 
             var client1 = new RestClient(TestConfiguration.API.Location);
             var request1 = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
@@ -27,9 +29,7 @@ namespace UC.WebApi.Tests.API.Tests
 
             do
             {
-                
-                newPhoneRandom = newphone + generator.Next(0, 100000).ToString("D5");
-
+                newPhoneRandom = newPhone + generator.Next(0, 100000).ToString("D5");
                 request1
                 .AddUrlSegment("dealer_name", dealer)
                 .AddUrlSegment("digest", digest)
@@ -40,21 +40,19 @@ namespace UC.WebApi.Tests.API.Tests
 
             } while (response1.Data.Success == false && requestCounter++ < 5);
 
-            if (response1.StatusCode != HttpStatusCode.OK || response1.Data == null || response1.Data.Success == false)
-            {
-                throw new Exception(AssertMessages.StatusCodeErrorMessage(client1.BuildUri(request1), response1.StatusCode, response1.Data.Success));
-            }
+            EnsureOkResponseStatusCode(response1, client1, request1);
 
             List<string> allErrorMessages = new List<string>();
 
-            ValidationResultModel<ValidateNphNumberModel> validatenphnumberResults;
-            var isValidateNphNumberDataValid = GlobalLogic.IsModelValid(response1.Data, out validatenphnumberResults);
+            //refactor: inline out variable
+            // use correct naming: validateNphNumberResults
+            var isValidateNphNumberDataValid = GlobalLogic.IsModelValid(response1.Data, out var validateNphNumberResults);
 
             if (!isValidateNphNumberDataValid)
             {
-                var message = $"ValidateNphNumber with success: {validatenphnumberResults.Model.Success} and description: {validatenphnumberResults.Model.Description}."
+                var message = $"ValidateNphNumber with success: {validateNphNumberResults.Model.Success} and description: {validateNphNumberResults.Model.Description}."
                     .RequestInfo(client1, request1)
-                    .WithValidationErrors(validatenphnumberResults.Results);
+                    .WithValidationErrors(validateNphNumberResults.Results);
 
                 allErrorMessages.Add(message);
             }
@@ -72,19 +70,16 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response2 = client2.Execute<ValidateNphNumberModel>(request2);
 
-            if (response2.StatusCode != HttpStatusCode.OK || response2.Data == null || response2.Data.Success == false)
-            {
-                throw new Exception(AssertMessages.StatusCodeErrorMessage(client2.BuildUri(request2), response2.StatusCode, response2.Data.Success));
-            }
+            EnsureOkResponseStatusCode(response2, client2, request2);
 
-            ValidationResultModel<ValidateNphNumberModel> savenewnumberResults;
-            var isSaveNewNumberDataValid = GlobalLogic.IsModelValid(response2.Data, out savenewnumberResults);
+            //refactor: inline out variable
+            var isSaveNewNumberDataValid = GlobalLogic.IsModelValid(response2.Data, out var saveNewNumberResults);
 
             if (!isSaveNewNumberDataValid)
             {
-                var message = $"SaveNewNumber with success: {savenewnumberResults.Model.Success} and description: {savenewnumberResults.Model.Description}."
+                var message = $"SaveNewNumber with success: {saveNewNumberResults.Model.Success} and description: {saveNewNumberResults.Model.Description}."
                     .RequestInfo(client2, request2)
-                    .WithValidationErrors(savenewnumberResults.Results);
+                    .WithValidationErrors(saveNewNumberResults.Results);
 
                 allErrorMessages.Add(message);
             }

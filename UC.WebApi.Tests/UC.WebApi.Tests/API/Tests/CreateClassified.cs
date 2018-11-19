@@ -7,6 +7,7 @@ using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
+using static UC.WebApi.Tests.API.Logic.GlobalLogic;
 
 namespace UC.WebApi.Tests.API.Tests
 {
@@ -54,10 +55,7 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response = client.Execute<CreateClassifiedModel>(request);
 
-            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
-            {
-                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Data.Success));
-            }
+            EnsureOkResponseStatusCode(response, client, request);
 
             List<string> allErrorMessages = new List<string>();
 
