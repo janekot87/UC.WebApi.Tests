@@ -70,7 +70,7 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isGetOtpValid)
             {
                 var message = $"GetOtp with success: {getOtpResults.Model.Success} and Otp: {getOtpResults.Model.Otp_code}."
-                    .RequestInfo(client1, request1)
+                    .RequestInfo(client2, request2)
                     .WithValidationErrors(sendOtpResults.Results);
 
                 allErrorMessages.Add(message);
@@ -82,7 +82,7 @@ namespace UC.WebApi.Tests.API.Tests
             request3
                 .AddParameter("digest", digest)
                 .AddParameter("phone", phone)
-                 .AddParameter("otp", getOtpResults.Model.Otp_code) // не уверенна!!!
+                 .AddParameter("otp", response2.Data.Otp_code) // не уверенна!!!
                 .AddHeader("Authorization", auth);
 
             var response3 = client3.Execute<CheckOtpModel>(request3);
@@ -114,7 +114,7 @@ namespace UC.WebApi.Tests.API.Tests
                 {
 
                     phone = phone,
-                    otp = getOtpResults.Model.Otp_code, // не уверенна!!!
+                    otp = response2.Data.Otp_code, // не уверенна!!!
                     password = password
 
                 });

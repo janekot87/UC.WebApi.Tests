@@ -29,7 +29,7 @@ namespace UC.WebApi.Tests.API.Attributes
                     return true;
                 }
 
-                ErrorMessage = $"Status code: {statusCode}\r\nContent type: {contentType}";
+                ErrorMessage = $"Status code of requested url: {statusCode}\r\nContent type: {contentType}";
                 return false;
             }
             catch (Exception ex)
