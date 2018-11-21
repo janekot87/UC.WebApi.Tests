@@ -27,7 +27,10 @@ namespace UC.WebApi.Tests.API.Tests
 
             var response = client.Execute<ReadClassifiedModel.RootObject>(request);
 
-            EnsureOkResponseStatusCode(response, client, request);
+            if (response.StatusCode != HttpStatusCode.OK || response.Data == null || response.Data.Success == false)
+            {
+                throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request), response.StatusCode, response.Content));
+            }
 
             List<string> allErrorMessages = new List<string>();
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
@@ -51,6 +52,9 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
+            //stop code execution for 5 sec
+            //Thread.Sleep(5000);
+
             var client2 = new RestClient(TestConfiguration.API.Location);
             var request2 = new RestRequest("user/otp_get?digest={digest}", Method.GET);
 
@@ -58,7 +62,9 @@ namespace UC.WebApi.Tests.API.Tests
                .AddUrlSegment("digest", digest)
                .AddHeader("Content-Type", contentType)
                .AddHeader("Authorization", auth)
-               .AddParameter("Phone", phone);
+               .AddParameter("phone", phone);
+
+
 
             var response2 = client2.Execute<GetOtpModel>(request2);
 
@@ -106,7 +112,7 @@ namespace UC.WebApi.Tests.API.Tests
             var client4 = new RestClient(TestConfiguration.API.Location);
             var request4 = new RestRequest("user/renew_pass?digest={digest}", Method.POST);
 
-            request1
+            request4
                 .AddUrlSegment("digest", digest)
                 .AddHeader("Content-Type", contentType)
                 .AddHeader("Authorization", auth)
