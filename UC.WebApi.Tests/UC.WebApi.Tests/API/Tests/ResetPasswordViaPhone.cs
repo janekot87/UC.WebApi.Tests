@@ -18,7 +18,7 @@ namespace UC.WebApi.Tests.API.Tests
         [InlineData(Data.Digest, Data.Phone, Data.Password, Data.BasicAuth, Data.ContentType)]
         public void ResetPasswordViaPhoneTest(string digest, string phone, string password, string auth, string contentType)
         {
-            var client1 = new RestClient(TestConfiguration.API.Location);
+            var client = new RestClient(TestConfiguration.API.Location);
             var request1 = new RestRequest("user/otp_set?digest={digest}", Method.POST);
 
             request1
@@ -33,9 +33,9 @@ namespace UC.WebApi.Tests.API.Tests
                 });
 
 
-            var response1 = client1.Execute<RegisterRequestModel>(request1);
+            var response1 = client.Execute<RegisterRequestModel>(request1);
 
-            EnsureOkResponseStatusCode(response1, client1, request1);
+            EnsureOkResponseStatusCode(response1, client, request1);
 
 
             List<string> allErrorMessages = new List<string>();
@@ -46,7 +46,7 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isSendOtpValid)
             {
                 var message = $"SendOtp with success: {sendOtpResults.Model.Success}"
-                    .RequestInfo(client1, request1)
+                    .RequestInfo(client, request1)
                     .WithValidationErrors(sendOtpResults.Results);
 
                 allErrorMessages.Add(message);
@@ -55,7 +55,7 @@ namespace UC.WebApi.Tests.API.Tests
             //stop code execution for 5 sec
             //Thread.Sleep(5000);
 
-            var client2 = new RestClient(TestConfiguration.API.Location);
+           
             var request2 = new RestRequest("user/otp_get?digest={digest}", Method.GET);
 
             request2
@@ -66,9 +66,9 @@ namespace UC.WebApi.Tests.API.Tests
 
 
 
-            var response2 = client2.Execute<GetOtpModel>(request2);
+            var response2 = client.Execute<GetOtpModel>(request2);
 
-            EnsureOkResponseStatusCode(response2, client2, request2);
+            EnsureOkResponseStatusCode(response2, client, request2);
 
             ValidationResultModel<GetOtpModel> getOtpResults;
             var isGetOtpValid = GlobalLogic.IsModelValid(response2.Data, out getOtpResults);
@@ -76,13 +76,13 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isGetOtpValid)
             {
                 var message = $"GetOtp with success: {getOtpResults.Model.Success} and Otp: {getOtpResults.Model.Otp_code}."
-                    .RequestInfo(client2, request2)
+                    .RequestInfo(client, request2)
                     .WithValidationErrors(sendOtpResults.Results);
 
                 allErrorMessages.Add(message);
             }
 
-            var client3 = new RestClient(TestConfiguration.API.Location);
+           
             var request3 = new RestRequest("/user/otp_check", Method.GET);
 
             request3
@@ -91,9 +91,9 @@ namespace UC.WebApi.Tests.API.Tests
                  .AddParameter("otp", response2.Data.Otp_code) // не уверенна!!!
                 .AddHeader("Authorization", auth);
 
-            var response3 = client3.Execute<CheckOtpModel>(request3);
+            var response3 = client.Execute<CheckOtpModel>(request3);
 
-            EnsureOkResponseStatusCode(response3, client3, request3);
+            EnsureOkResponseStatusCode(response3, client, request3);
 
       
             ValidationResultModel<CheckOtpModel> checkOtpResults;
@@ -102,14 +102,14 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isCheckOtpDataValid)
             {
                 var message = $"CheckOtp with success: {checkOtpResults.Model.Success} and username: {checkOtpResults.Model.Username}."
-                    .RequestInfo(client3, request3)
+                    .RequestInfo(client, request3)
                     .WithValidationErrors(checkOtpResults.Results);
 
                 allErrorMessages.Add(message);
 
             }
 
-            var client4 = new RestClient(TestConfiguration.API.Location);
+           
             var request4 = new RestRequest("user/renew_pass?digest={digest}", Method.POST);
 
             request4
@@ -126,9 +126,9 @@ namespace UC.WebApi.Tests.API.Tests
                 });
 
 
-            var response4 = client4.Execute<RegisterRequestModel>(request4);
+            var response4 = client.Execute<RegisterRequestModel>(request4);
 
-            EnsureOkResponseStatusCode(response4, client4, request4);
+            EnsureOkResponseStatusCode(response4, client, request4);
 
                    
             ValidationResultModel<RegisterRequestModel> updatePasswordResults;
@@ -137,7 +137,7 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isUpdatePasswordValid)
             {
                 var message = $"UpdatePassword with success: {updatePasswordResults.Model.Success}"
-                    .RequestInfo(client4, request4)
+                    .RequestInfo(client, request4)
                     .WithValidationErrors(updatePasswordResults.Results);
 
                 allErrorMessages.Add(message);
