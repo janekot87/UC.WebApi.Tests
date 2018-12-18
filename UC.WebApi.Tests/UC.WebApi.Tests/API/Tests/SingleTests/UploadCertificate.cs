@@ -16,7 +16,7 @@ namespace UC.WebApi.Tests.API.Tests
         [Theory]
         [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypePdf)]
        
-        public void UploadCertificateTest(string digest, string auth, string guid, string fileType)
+        public void UploadCertificateTest(string digest, string auth, string guid, string typeCert)
         {
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/file?digest={digest}", Method.POST);
@@ -34,7 +34,7 @@ namespace UC.WebApi.Tests.API.Tests
                     file =
                         new
                         {
-                            type = fileType,
+                            type = typeCert,
                             name = Data.PdfName,
                             content = Data.FileContentPdf
                         }
