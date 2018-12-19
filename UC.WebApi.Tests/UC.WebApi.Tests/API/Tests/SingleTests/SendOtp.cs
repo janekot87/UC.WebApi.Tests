@@ -1,16 +1,13 @@
-﻿/*using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using RestSharp;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
-using static UC.WebApi.Tests.API.Logic.GlobalLogic;
 
-
-namespace UC.WebApi.Tests.API.Tests
+namespace UC.WebApi.Tests.API.Tests.SingleTests
 {
     public class SendOtp
     {
@@ -27,15 +24,15 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(new
                 {
-                    
+
                     phone = phone
-                    
+
                 });
 
 
             var response = client.Execute<RegisterRequestModel>(request);
 
-            EnsureOkResponseStatusCode(response, client, request);
+            GlobalLogic.EnsureOkResponseStatusCode(response, client, request);
 
 
             List<string> allErrorMessages = new List<string>();
@@ -62,5 +59,5 @@ namespace UC.WebApi.Tests.API.Tests
 }
 
 
-      */  
+
 

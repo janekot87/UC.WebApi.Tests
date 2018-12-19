@@ -1,35 +1,34 @@
-﻿/*using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using RestSharp;
+using UC.WebApi.Tests.API.Attributes;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
 using Xunit;
-using static UC.WebApi.Tests.API.Logic.GlobalLogic;
 
-namespace UC.WebApi.Tests.API.Tests
+namespace UC.WebApi.Tests.API.Tests.SingleTests
 {
     public class CheckOtp
     {
-             
-            [Theory]
-            [InlineData(Data.Digest, Data.Phone, Data.Otp, Data.BasicAuth)]
-            public void CheckOtpTest(string digest, string phone, int otp, string auth)
-            {
-                var client = new RestClient(TestConfiguration.API.Location);
-                var request = new RestRequest("/user/otp_check", Method.GET);
 
-                request
-                    .AddParameter("digest", digest)
-                    .AddParameter("phone", phone)
-                     .AddParameter("otp", otp)
-                    .AddHeader("Authorization", auth);
+        [SkippableTheory]
+        [InlineData(Data.Digest, Data.Phone, Data.Otp, Data.BasicAuth)]
+        public void CheckOtpTest(string digest, string phone, int otp, string auth)
+        {
+            var client = new RestClient(TestConfiguration.API.Location);
+            var request = new RestRequest("/user/otp_check", Method.GET);
 
-                var response = client.Execute<CheckOtpModel>(request);
+            request
+                .AddParameter("digest", digest)
+                .AddParameter("phone", phone)
+                 .AddParameter("otp", otp)
+                .AddHeader("Authorization", auth);
 
-                EnsureOkResponseStatusCode(response, client, request);
+            var response = client.Execute<CheckOtpModel>(request);
+
+            GlobalLogic.EnsureOkResponseStatusCode(response, client, request);
 
             List<string> allErrorMessages = new List<string>();
 
@@ -51,6 +50,6 @@ namespace UC.WebApi.Tests.API.Tests
             }
 
         }
-        }
     }
-    */
+}
+
