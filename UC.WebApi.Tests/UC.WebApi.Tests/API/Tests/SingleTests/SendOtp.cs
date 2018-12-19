@@ -1,4 +1,4 @@
-﻿using RestSharp;
+﻿/*using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace UC.WebApi.Tests.API.Tests
     {
         [Theory]
         [InlineData(Data.Digest, Data.Phone, Data.BasicAuth, Data.ContentType)]
-        public void RegisterRequestValidTest(string digest, string phone, string auth, string contentType)
+        public void SendOtpTest(string digest, string phone, string auth, string contentType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("user/otp_set?digest={digest}", Method.POST);
@@ -62,5 +62,5 @@ namespace UC.WebApi.Tests.API.Tests
 }
 
 
-        
+      */  
 

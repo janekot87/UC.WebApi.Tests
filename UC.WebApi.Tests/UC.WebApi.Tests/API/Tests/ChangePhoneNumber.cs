@@ -21,7 +21,7 @@ namespace UC.WebApi.Tests.API.Tests
         {
             var generator = new Random();          
 
-            var client1 = new RestClient(TestConfiguration.API.Location);
+            var client = new RestClient(TestConfiguration.API.Location);
             var request1 = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
             var requestCounter = 0;
             string newPhoneRandom;
@@ -36,11 +36,11 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddParameter("phone", newPhoneRandom)
                 .AddHeader("Authorization", auth);
 
-                 response1 = client1.Execute<ValidateNphNumberModel>(request1);
+                 response1 = client.Execute<ValidateNphNumberModel>(request1);
 
             } while (response1.Data.Success == false && requestCounter++ < 5);
 
-            EnsureOkResponseStatusCode(response1, client1, request1);
+            EnsureOkResponseStatusCode(response1, client, request1);
 
             List<string> allErrorMessages = new List<string>();
 
@@ -51,14 +51,14 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isValidateNphNumberDataValid)
             {
                 var message = $"ValidateNphNumber with success: {validateNphNumberResults.Model.Success} and description: {validateNphNumberResults.Model.Description}."
-                    .RequestInfo(client1, request1)
+                    .RequestInfo(client, request1)
                     .WithValidationErrors(validateNphNumberResults.Results);
 
                 allErrorMessages.Add(message);
             }
 
 
-            var client2 = new RestClient(TestConfiguration.API.Location);
+            
             var request2 = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
 
             request2
@@ -68,9 +68,9 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddParameter("save", save)
                 .AddHeader("Authorization", auth);
 
-            var response2 = client2.Execute<ValidateNphNumberModel>(request2);
+            var response2 = client.Execute<ValidateNphNumberModel>(request2);
 
-            EnsureOkResponseStatusCode(response2, client2, request2);
+            EnsureOkResponseStatusCode(response2, client, request2);
 
             //refactor: inline out variable
             var isSaveNewNumberDataValid = GlobalLogic.IsModelValid(response2.Data, out var saveNewNumberResults);
@@ -78,13 +78,13 @@ namespace UC.WebApi.Tests.API.Tests
             if (!isSaveNewNumberDataValid)
             {
                 var message = $"SaveNewNumber with success: {saveNewNumberResults.Model.Success} and description: {saveNewNumberResults.Model.Description}."
-                    .RequestInfo(client2, request2)
+                    .RequestInfo(client, request2)
                     .WithValidationErrors(saveNewNumberResults.Results);
 
                 allErrorMessages.Add(message);
             }
 
-            var client3 = new RestClient(TestConfiguration.API.Location);
+           
             var request3 = new RestRequest("/users/{dealer_name}", Method.GET);
 
             request3
@@ -92,7 +92,7 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddParameter("digest", digest)
                 .AddHeader("Authorization", auth);
 
-            var response3 = client3.Execute<DealerDataModel.RootObject>(request3);
+            var response3 = client.Execute<DealerDataModel.RootObject>(request3);
 
             if (!response3.Data.Items.Phone.Equals("91" + newPhoneRandom))
             {
@@ -100,6 +100,33 @@ namespace UC.WebApi.Tests.API.Tests
 
                 allErrorMessages.Add(message);
             }
+
+
+            var request4 = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
+
+            request4
+                .AddUrlSegment("dealer_name", dealer)
+                .AddUrlSegment("digest", digest)
+                .AddParameter("phone", Data.PhoneBack)
+                .AddParameter("save", save)
+                .AddHeader("Authorization", auth);
+
+            var response4 = client.Execute<ValidateNphNumberModel>(request4);
+
+            EnsureOkResponseStatusCode(response4, client, request4);
+
+            //refactor: inline out variable
+            var ischangeNumberBackDataValid = GlobalLogic.IsModelValid(response4.Data, out var changeNumberBackResults);
+
+            if (!ischangeNumberBackDataValid)
+            {
+                var message = $"ChangeNumberBack with success: {changeNumberBackResults.Model.Success} and description: {changeNumberBackResults.Model.Description}."
+                    .RequestInfo(client, request4)
+                    .WithValidationErrors(changeNumberBackResults.Results);
+
+                allErrorMessages.Add(message);
+            }
+
 
             if (allErrorMessages.Any())
             {

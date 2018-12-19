@@ -18,6 +18,8 @@ namespace UC.WebApi.Tests.API.Tests
         public void ResetPasswordViaEmailTest(string digest, string email, string password, string auth,string contentType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
+
+            //Send Password Reset Email
             var request1 = new RestRequest("user/pass_mail?digest={digest}", Method.POST);
 
             request1
@@ -50,6 +52,7 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
+            //Get Guid
             var request2 = new RestRequest("user/get_pass_reset?digest={digest}", Method.GET);
 
             request2
@@ -76,6 +79,7 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
+            //Check Guid
             var request3 = new RestRequest("/user/pass_reset/{guid}", Method.GET);
 
             request3
@@ -99,6 +103,8 @@ namespace UC.WebApi.Tests.API.Tests
 
                 allErrorMessages.Add(message);
             }
+
+            //Change Password
             var request4 = new RestRequest("/user/pass_reset/{guid}?digest={digest}", Method.POST);
 
             request4

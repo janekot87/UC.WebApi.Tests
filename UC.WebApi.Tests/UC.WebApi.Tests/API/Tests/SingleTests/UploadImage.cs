@@ -1,4 +1,4 @@
-using RestSharp;
+/* using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace UC.WebApi.Tests.API.Tests
 {
     public class UploadImage
     {
-        /* [Theory]
+        [Theory]
          [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeMI)]
          [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeNMI)]
          [InlineData(Data.Digest, Data.BasicAuth, Data.Guid, Data.FileTypeUI)]
@@ -65,7 +65,7 @@ namespace UC.WebApi.Tests.API.Tests
              }
 
          }*/
-        [Theory]
+/*[Theory]
         [InlineData(Data.Digest, Data.BasicAuth, Data.Guid)]
         public void UploadImageTest(string digest, string auth, string guid)
         {
@@ -121,3 +121,4 @@ namespace UC.WebApi.Tests.API.Tests
 }
     
 
+*/

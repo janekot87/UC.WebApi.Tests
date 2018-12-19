@@ -1,4 +1,4 @@
-﻿using RestSharp;
+﻿/*using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace UC.WebApi.Tests.API.Tests
 {
     public class CheckOtp
     {
-                
+             
             [Theory]
             [InlineData(Data.Digest, Data.Phone, Data.Otp, Data.BasicAuth)]
             public void CheckOtpTest(string digest, string phone, int otp, string auth)
@@ -53,4 +53,4 @@ namespace UC.WebApi.Tests.API.Tests
         }
         }
     }
-
+    */

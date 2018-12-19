@@ -8,8 +8,9 @@ namespace UC.WebApi.Tests.API.DataStore
         public const string ContentType = "application/json";
         public const string DealerName = "testdaria";
         public const string Phone = "9899999999";
+        public const string PhoneBack = "9899999999";
         public const string NewPhone = "99999";
-        public const int Otp = 2189;
+        public const int Otp = 3325;
         public const string Password = "12345678";
         public const string Userdata = "dGVzdGRhcmlhOjEyMzQ1Njc4";
         public const int Save = 1;

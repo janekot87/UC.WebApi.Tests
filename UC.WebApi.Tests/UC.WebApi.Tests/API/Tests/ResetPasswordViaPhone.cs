@@ -19,6 +19,8 @@ namespace UC.WebApi.Tests.API.Tests
         public void ResetPasswordViaPhoneTest(string digest, string phone, string password, string auth, string contentType)
         {
             var client = new RestClient(TestConfiguration.API.Location);
+
+            //Send OTP
             var request1 = new RestRequest("user/otp_set?digest={digest}", Method.POST);
 
             request1
@@ -52,10 +54,9 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
-            //stop code execution for 5 sec
-            //Thread.Sleep(5000);
+         
 
-           
+           //Get OTP
             var request2 = new RestRequest("user/otp_get?digest={digest}", Method.GET);
 
             request2
@@ -82,13 +83,13 @@ namespace UC.WebApi.Tests.API.Tests
                 allErrorMessages.Add(message);
             }
 
-           
+           //Check OTP
             var request3 = new RestRequest("/user/otp_check", Method.GET);
 
             request3
                 .AddParameter("digest", digest)
                 .AddParameter("phone", phone)
-                 .AddParameter("otp", response2.Data.Otp_code) // не уверенна!!!
+                 .AddParameter("otp", response2.Data.Otp_code) 
                 .AddHeader("Authorization", auth);
 
             var response3 = client.Execute<CheckOtpModel>(request3);
@@ -109,7 +110,7 @@ namespace UC.WebApi.Tests.API.Tests
 
             }
 
-           
+           //Change Password
             var request4 = new RestRequest("user/renew_pass?digest={digest}", Method.POST);
 
             request4
@@ -120,7 +121,7 @@ namespace UC.WebApi.Tests.API.Tests
                 {
 
                     phone = phone,
-                    otp = response2.Data.Otp_code, // не уверенна!!!
+                    otp = response2.Data.Otp_code, 
                     password = password
 
                 });
