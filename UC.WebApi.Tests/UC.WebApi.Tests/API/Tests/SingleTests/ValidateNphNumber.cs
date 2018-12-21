@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using UC.WebApi.Tests.API.Attributes;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
@@ -15,20 +16,30 @@ namespace UC.WebApi.Tests.API.Tests
 {
     public class ValidateNphNumber
     {
-        [Theory]
+        [SkippableTheory]
         [InlineData(Data.DealerName, Data.Digest, Data.NewPhone, Data.BasicAuth)]
-        public void ValidateNphNumberTest(string dealer, string digest, string newphone, string auth)
+        public void ValidateNphNumberTest(string dealer, string digest, string newPhone, string auth)
         {
+            var generator = new Random();
+
             var client = new RestClient(TestConfiguration.API.Location);
             var request = new RestRequest("/users/{dealer_name}/phone?digest={digest}", Method.PUT);
+            var requestCounter = 0;
+            string newPhoneRandom;
+            IRestResponse<ValidateNphNumberModel> response;
 
-            request
+            do
+            {
+                newPhoneRandom = newPhone + generator.Next(0, 100000).ToString("D5");
+                request
                 .AddUrlSegment("dealer_name", dealer)
                 .AddUrlSegment("digest", digest)
-                .AddParameter("phone", newphone)
+                .AddParameter("phone", newPhoneRandom)
                 .AddHeader("Authorization", auth);
 
-            var response = client.Execute<ValidateNphNumberModel>(request);
+                response = client.Execute<ValidateNphNumberModel>(request);
+
+            } while (response.Data.Success == false && requestCounter++ < 5);
 
             EnsureOkResponseStatusCode(response, client, request);
 

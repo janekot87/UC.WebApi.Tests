@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RestSharp;
+using UC.WebApi.Tests.API.Attributes;
 using UC.WebApi.Tests.API.DataStore;
 using UC.WebApi.Tests.API.Logic;
 using UC.WebApi.Tests.API.Models;
@@ -11,7 +12,7 @@ namespace UC.WebApi.Tests.API.Tests.SingleTests
 {
     public class SendOtp
     {
-        [Theory]
+        [SkippableTheory]
         [InlineData(Data.Digest, Data.Phone, Data.BasicAuth, Data.ContentType)]
         public void SendOtpTest(string digest, string phone, string auth, string contentType)
         {
