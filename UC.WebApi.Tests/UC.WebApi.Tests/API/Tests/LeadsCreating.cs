@@ -1,4 +1,4 @@
-﻿/*using RestSharp;
+﻿using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +94,7 @@ namespace UC.WebApi.Tests.API.Tests
             var isClassifiedDataValid = GlobalLogic.IsModelValid(response2.Data, out classifiedDataMainResults);
             if (!isClassifiedDataValid)
             {
-                var message = $"Classified with success: {classifiedDataMainResults.Model.Success} and results: {classifiedDataMainResults.Model.Results}."
+                var message = $"Classified with success: {classifiedDataMainResults.Model.Success} and Id: {classifiedDataMainResults.Model.Items.id}."
                     .RequestInfo(client, request2)
                     .WithValidationErrors(classifiedDataMainResults.Results);
 
@@ -109,7 +109,7 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddUrlSegment("digest", digest)
                 .AddJsonBody(new{
 
-                    classified_id = response2.Data.Items.classified_id,
+                    classified_id = response2.Data.Items.id,
                     customer_email = email,
                     customer_name = dealerName,
                     customer_phone = phone,
@@ -207,4 +207,3 @@ namespace UC.WebApi.Tests.API.Tests
 
     }
 }
-*/

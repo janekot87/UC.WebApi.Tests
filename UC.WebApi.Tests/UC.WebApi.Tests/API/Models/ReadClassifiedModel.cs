@@ -23,6 +23,9 @@ namespace UC.WebApi.Tests.API.Models
         public class Items
         {
             [Required]
+            public string id { get; set; }
+
+            [Required]
             public string guid { get; set; }
 
             public string special_conditions { get; set; }
