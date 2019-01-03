@@ -90,8 +90,9 @@ namespace UC.WebApi.Tests.API.Tests
                 throw new Exception(AssertMessages.StatusCodeErrorMessage(client.BuildUri(request2), response2.StatusCode, response2.Content));
             }
 
-                        ValidationResultModel<ReadClassifiedModel.RootObject> classifiedDataMainResults;
+            ValidationResultModel<ReadClassifiedModel.RootObject> classifiedDataMainResults;
             var isClassifiedDataValid = GlobalLogic.IsModelValid(response2.Data, out classifiedDataMainResults);
+
             if (!isClassifiedDataValid)
             {
                 var message = $"Classified with success: {classifiedDataMainResults.Model.Success} and Id: {classifiedDataMainResults.Model.Items.id}."
@@ -164,11 +165,11 @@ namespace UC.WebApi.Tests.API.Tests
             }
 
             //Update Classified
-            var request5 = new RestRequest("/objects/{guid}", Method.PUT);
+            var request5 = new RestRequest("/objects/{guid}?digest={digest}", Method.PUT);
             request5.RequestFormat = DataFormat.Json;
             request5
                 .AddUrlSegment("guid", response1.Data.Guid)
-                .AddParameter("digest", digest)
+                .AddUrlSegment("digest", digest)
                 .AddHeader("Authorization", auth)
                 .AddJsonBody(
                 new
