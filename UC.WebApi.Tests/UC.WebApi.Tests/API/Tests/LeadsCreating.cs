@@ -171,7 +171,10 @@ namespace UC.WebApi.Tests.API.Tests
                 .AddUrlSegment("guid", response1.Data.Guid)
                 .AddUrlSegment("digest", digest)
                 .AddHeader("Authorization", auth)
-                .AddJsonBody(
+                .AddParameter("data[status]", 3 
+                
+                );
+               /* .AddJsonBody(
                 new
                 {
                     data =
@@ -179,7 +182,7 @@ namespace UC.WebApi.Tests.API.Tests
                     {
                         status = 3
                     }
-                });
+                });*/
 
             var response5 = client.Execute<RegisterRequestModel>(request5);
 
